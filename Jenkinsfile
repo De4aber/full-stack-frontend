@@ -5,6 +5,8 @@ pipeline {
         pollSCM "*/5 * * * *"
     }
 
+    tools {nodejs "node"}
+
     stages {
 	    stage('Building') {
             steps{
