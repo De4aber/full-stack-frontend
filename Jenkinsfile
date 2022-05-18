@@ -22,7 +22,7 @@ pipeline {
         }
         stage("Reset containers"){
             steps{
-                sh "docker compose down"
+                sh "docker compose down ."
                 sh "docker compose up -d --build"
             }
         }
