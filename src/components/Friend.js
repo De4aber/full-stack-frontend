@@ -1,5 +1,3 @@
-import {FaTimes} from "react-icons/fa";
-import CreateUser from "./CreateUser";
 
 const Friend = ({friend, user}) => {
 

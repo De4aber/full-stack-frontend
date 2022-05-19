@@ -1,20 +1,12 @@
-import Friend from "./Friend";
+import Button from "./Button";
 
-const Friends = ({friends, user}) => {
+const Friends = ({showAddFriend, onShowAddFriend}) => {
 
     return (
-        <>
-            <h3>Your friends!</h3>
-            {
-                friends.map((friend) => (
-                    <Friend key={friend.id}
-                            friend={friend}
-                            user={user}
-                    />
-                ))
-            }
-        </>
-
+        <div className='header'>
+            <h2>{showAddFriend ? 'Add friends' : 'Your friends'}</h2>
+            <Button text={showAddFriend ? 'Show friends' : 'Add friend'} onClick={onShowAddFriend}/>
+        </div>
     )
 }
 

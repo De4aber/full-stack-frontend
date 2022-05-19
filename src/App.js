@@ -8,9 +8,12 @@ import Login from "./components/Login";
 import LoginUI from "./components/LoginUI";
 import CreateUser from "./components/CreateUser";
 import Friends from "./components/Friends";
+import FriendsUI from "./components/FriendsUI";
+import AddFriend from "./components/AddFriend";
 
 const App = () => {
     const[showCreateUser, setShowCreateUser] = useState(false)
+    const[showAddFriend, setShowAddFriend] = useState(false)
     let tomorrow = new Date()
     let today = new Date()
     tomorrow.setDate(today.getDate() + 1)
@@ -127,11 +130,9 @@ const App = () => {
                         <AddCappsule onAdd={addCappsule}/>
                     </Route>
                     <Route exact path="/friends">
-                        {friends.length > 0 ? (
-                            <Friends friends={friends}/>
-                        ) : (
-                            'No Friends to show!'
-                        )}
+                        <Friends friends={friends} onShowAddFriend={()=>setShowAddFriend(!showAddFriend)} showAddFriend={showAddFriend}/>
+                        {!showAddFriend && <FriendsUI friends={friends}/>}
+                        {showAddFriend && <AddFriend/>}
                     </Route>
                 </Switch>
             </div>
