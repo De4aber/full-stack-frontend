@@ -1,6 +1,4 @@
 import Button from "./Button";
-import PropTypes from "prop-types";
-import LoginUI from "./LoginUI";
 
 const Login = ({ showCreateUser, onShowCreate}) => {
 

@@ -1,4 +1,3 @@
-import Header from "./components/Header";
 import Cappsules from "./components/Cappsules";
 import {useState} from "react";
 import AddCappsule from "./components/AddCappsule";
@@ -8,6 +7,7 @@ import Navbar from "./components/Navbar";
 import Login from "./components/Login";
 import LoginUI from "./components/LoginUI";
 import CreateUser from "./components/CreateUser";
+import Friends from "./components/Friends";
 
 const App = () => {
     const[showCreateUser, setShowCreateUser] = useState(false)
@@ -46,18 +46,38 @@ const App = () => {
             showMessage: false,
         }
     ])
+    const [friends, setFriends] = useState([
+        {
+            id: 1,
+            UserIdRequesting: 'Birte',  //Er det muligt at hente dem er med navne fra backend?
+            UserIdRequested: 'Benedikte', //Samt at få dem i en consistent orden? altså "UserIdRequesting" er altid den som man søger efter og UserIdRequested altid er vennen?
+            Accepted: true,
+        },
+        {
+            id: 2,
+            UserIdRequesting: 'Bubber',
+            UserIdRequested: 'BS',
+            Accepted: true,
+        },
+        {
+            id: 3,
+            UserIdRequesting: 'Bodil',
+            UserIdRequested: 'Berta',
+            Accepted: false,
+        },
+    ])
 
-    //Login user
+    //Login user -- regner med at lave kald til database her
     function login(user) {
         console.log('LOGGED IN: ' + user.username + ' ' + user.password)
     }
 
-    //Create user
+    //Create user -- regner med at lave kald til database her
     function createUser(user){
         console.log('CREATED: ' + user.username + ' ' + user.password)
     }
 
-    //Add Cappsule
+    //Add Cappsule -- regner med at lave kald til database her
     const addCappsule = (cappsule) => {
         const id = Math.floor(Math.random() * 10000) + 1
         const newCappsule = {id, ...cappsule}
@@ -73,7 +93,7 @@ const App = () => {
         console.log(id)
     }
 
-    //Delete Cappsule
+    //Delete Cappsule -- regner med at lave kald til database her
     const deleteCappule = (id) => {
         setCappsules(cappsules.filter((cappsule)=> cappsule.id !== id))
         console.log('delete', id)
@@ -105,6 +125,13 @@ const App = () => {
                     </Route>
                     <Route exact path="/createcappsule">
                         <AddCappsule onAdd={addCappsule}/>
+                    </Route>
+                    <Route exact path="/friends">
+                        {friends.length > 0 ? (
+                            <Friends friends={friends}/>
+                        ) : (
+                            'No Friends to show!'
+                        )}
                     </Route>
                 </Switch>
             </div>

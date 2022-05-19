@@ -3,9 +3,10 @@ const Navbar = () => {
         <nav className="navbar">
             <div className="links">
                 <a href="/">Home</a> &nbsp;
-                &nbsp; <a href="/login">Login</a> &nbsp;
-                &nbsp; <a href="/messages">Messages</a> &nbsp;
-                &nbsp; <a href="/createcappsule">Create cAppsule</a>
+                <a href="/login">Login</a> &nbsp;
+                <a href="/messages">Messages</a> &nbsp;
+                <a href="/createcappsule">Create cAppsule</a> &nbsp;
+                <a href="/friends">Friends</a>
             </div>
         </nav>
     )
