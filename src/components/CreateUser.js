@@ -16,8 +16,8 @@ const CreateUser = ({onCreateUser}) => {
             alert('Your passwords does not match')
             return
         }
-
-        onCreateUser({username,password})
+        const birthDate = new Date().toString()
+        onCreateUser({username,password,birthDate})
 
         setUsername('')
         setPassword('')

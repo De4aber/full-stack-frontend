@@ -1,5 +1,5 @@
 import Cappsules from "./components/Cappsules";
-import {useState} from "react";
+import { useState } from "react";
 import AddCappsule from "./components/AddCappsule";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Home from "./components/Home";
@@ -10,10 +10,14 @@ import CreateUser from "./components/CreateUser";
 import Friends from "./components/Friends";
 import FriendsUI from "./components/FriendsUI";
 import AddFriend from "./components/AddFriend";
+import { AuthStore } from './stores/authStore';
 
 const App = () => {
-    const[showCreateUser, setShowCreateUser] = useState(false)
-    const[showAddFriend, setShowAddFriend] = useState(false)
+    const [showCreateUser, setShowCreateUser] = useState(false)
+    const [showAddFriend, setShowAddFriend] = useState(false)
+
+
+    const authStore = new AuthStore();
     let tomorrow = new Date()
     let today = new Date()
     tomorrow.setDate(today.getDate() + 1)
@@ -71,34 +75,40 @@ const App = () => {
     ])
 
     //Login user -- regner med at lave kald til database her
-    function login(user) {
-        console.log('LOGGED IN: ' + user.username + ' ' + user.password)
+    const login = async (user) => {
+        await authStore.attemptLogin(user)
+        if (authStore.user) {
+            localStorage.setItem("token", authStore.user.token)
+        }
     }
 
     //Create user -- regner med at lave kald til database her
-    function createUser(user){
-        console.log('CREATED: ' + user.username + ' ' + user.password)
+    const createUser = async (user) => {
+        await authStore.attemptRegister(user)
+        console.log(authStore.user)
     }
 
     //Add Cappsule -- regner med at lave kald til database her
     const addCappsule = (cappsule) => {
         const id = Math.floor(Math.random() * 10000) + 1
-        const newCappsule = {id, ...cappsule}
-        setCappsules([... cappsules, newCappsule])
+        const newCappsule = { id, ...cappsule }
+        setCappsules([...cappsules, newCappsule])
     }
 
     //Open message
     const openMessage = (id) => {
         setCappsules(cappsules.map((cappsule) =>
-            cappsule.id === id ? { ...cappsule,
-                showMessage: !cappsule.showMessage }
+            cappsule.id === id ? {
+                ...cappsule,
+                showMessage: !cappsule.showMessage
+            }
                 : cappsule))
         console.log(id)
     }
 
     //Delete Cappsule -- regner med at lave kald til database her
     const deleteCappule = (id) => {
-        setCappsules(cappsules.filter((cappsule)=> cappsule.id !== id))
+        setCappsules(cappsules.filter((cappsule) => cappsule.id !== id))
         console.log('delete', id)
     }
 
@@ -107,43 +117,43 @@ const App = () => {
         console.log(friend)
     }
 
-  return (
-      <Router>
-        <div className='container'>
-            <Navbar/>
-            <div className="content">
-                <Switch>
-                    <Route exact path="/">
-                        <Home/>
-                    </Route>
-                    <Route exact path="/login">
-                        <Login onShowCreate={()=>setShowCreateUser(!showCreateUser) } showCreateUser={showCreateUser}/>
-                        {!showCreateUser && <LoginUI onLogin={login}/>}
-                        {showCreateUser && <CreateUser onCreateUser={createUser}/>}
-                    </Route>
-                    <Route exact path="/messages">
-                        {cappsules.length > 0 ? (
-                            <Cappsules cappsules={cappsules}
-                                       onDelete={deleteCappule}
-                                       onOpen={openMessage}
-                            />
-                        ) : (
-                            'No Cappsules to show!'
-                        )}
-                    </Route>
-                    <Route exact path="/createcappsule">
-                        <AddCappsule onAdd={addCappsule}/>
-                    </Route>
-                    <Route exact path="/friends">
-                        <Friends friends={friends} onShowAddFriend={()=>setShowAddFriend(!showAddFriend)} showAddFriend={showAddFriend}/>
-                        {!showAddFriend && <FriendsUI friends={friends}/>}
-                        {showAddFriend && <AddFriend onSendRequest={sendFriendRequest}/>}
-                    </Route>
-                </Switch>
+    return (
+        <Router>
+            <div className='container'>
+                <Navbar />
+                <div className="content">
+                    <Switch>
+                        <Route exact path="/">
+                            <Home />
+                        </Route>
+                        <Route exact path="/login">
+                            <Login onShowCreate={() => setShowCreateUser(!showCreateUser)} showCreateUser={showCreateUser} />
+                            {!showCreateUser && <LoginUI onLogin={login} />}
+                            {showCreateUser && <CreateUser onCreateUser={createUser} />}
+                        </Route>
+                        <Route exact path="/messages">
+                            {cappsules.length > 0 ? (
+                                <Cappsules cappsules={cappsules}
+                                    onDelete={deleteCappule}
+                                    onOpen={openMessage}
+                                />
+                            ) : (
+                                'No Cappsules to show!'
+                            )}
+                        </Route>
+                        <Route exact path="/createcappsule">
+                            <AddCappsule onAdd={addCappsule} />
+                        </Route>
+                        <Route exact path="/friends">
+                            <Friends friends={friends} onShowAddFriend={() => setShowAddFriend(!showAddFriend)} showAddFriend={showAddFriend} />
+                            {!showAddFriend && <FriendsUI friends={friends} />}
+                            {showAddFriend && <AddFriend onSendRequest={sendFriendRequest} />}
+                        </Route>
+                    </Switch>
+                </div>
             </div>
-        </div>
-      </Router>
-  );
+        </Router>
+    );
 }
 
 export default App;
