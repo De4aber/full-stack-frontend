@@ -20,6 +20,11 @@ body {
   border-radius: 5px;
 }
 
+.navbar a{
+  font-family: inherit;
+  color: black;
+}
+
 .header {
   display: flex;
   justify-content: space-between;

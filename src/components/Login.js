@@ -1,22 +1,13 @@
 import Button from "./Button";
-import PropTypes from "prop-types";
 
-const Login = ({ showCreateUser, onShowCreate, title }) => {
+const Login = ({ showCreateUser, onShowCreate}) => {
 
     return (
         <div className='header'>
-            <h1>{title}</h1>
+            <h2>{showCreateUser ? 'Create account' : 'Login'}</h2>
             <Button text={showCreateUser ? 'Login' : 'Create account'} onClick={onShowCreate}/>
         </div>
     )
-}
-
-Login.defaultProps = {
-    title: 'Login',
-}
-
-Login.propTypes = {
-    title: PropTypes.string.isRequired,
 }
 
 export default Login
