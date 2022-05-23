@@ -60,13 +60,13 @@ const App = () => {
             id: 2,
             UserIdRequesting: 'Bubber',
             UserIdRequested: 'BS',
-            Accepted: true,
+            Accepted: false,
         },
         {
             id: 3,
             UserIdRequesting: 'Bodil',
             UserIdRequested: 'Berta',
-            Accepted: false,
+            Accepted: true,
         },
     ])
 
@@ -102,6 +102,11 @@ const App = () => {
         console.log('delete', id)
     }
 
+    //Send friend request
+    const sendFriendRequest = (friend) => {
+        console.log(friend)
+    }
+
   return (
       <Router>
         <div className='container'>
@@ -132,7 +137,7 @@ const App = () => {
                     <Route exact path="/friends">
                         <Friends friends={friends} onShowAddFriend={()=>setShowAddFriend(!showAddFriend)} showAddFriend={showAddFriend}/>
                         {!showAddFriend && <FriendsUI friends={friends}/>}
-                        {showAddFriend && <AddFriend/>}
+                        {showAddFriend && <AddFriend onSendRequest={sendFriendRequest}/>}
                     </Route>
                 </Switch>
             </div>
