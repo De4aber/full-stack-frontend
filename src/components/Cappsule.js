@@ -21,12 +21,12 @@ const Cappsule = ({cappsule, onDelete, onOpen}) => {
     }
 
     return(
-        <div className={`task ${cappsule.showMessage ? 'reminder' : ''}`} onDoubleClick={() =>  showMessageFunction(cappsule.id)}>
-            <h3>From: {cappsule.sender}
-                <FaTimes style={{ color: 'red', cursor: 'pointer' }} onClick={() => onDelete(cappsule.id)}
+        <div className={`task ${cappsule.showMessage ? 'reminder' : ''}`} onDoubleClick={() =>  showMessageFunction(cappsule.capsuleId)}>
+            <h3>From: {cappsule.senderUsername}
+                <FaTimes style={{ color: 'red', cursor: 'pointer' }} onClick={() => onDelete(cappsule.capsuleId)}
                 />
             </h3>
-            <p><small>{cappsule.openTime}</small></p>
+            <p><small>{cappsule.time}</small></p>
             {showMessage && <p>{cappsule.message}</p>}
         </div>
     )
