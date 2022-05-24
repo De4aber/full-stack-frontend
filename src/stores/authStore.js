@@ -7,12 +7,18 @@ export class AuthStore{
     attemptLogin = async (user) =>{
         localStorage.clear();
         const response = await authService.attemptLogin(user)
-        this.user =  this.getUser(response.data.id)
+        return await this.getUser(response.data.userId)
     }
 
     getUser = async (id) => {
         const response = await authService.getUser(id)
         this.user = response.data
+        localStorage.setItem("user", JSON.stringify(this.user))
+    }
+
+    test = () => {
+        
+        return this.user
     }
 
     attemptRegister = async (user) =>{

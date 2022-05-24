@@ -1,13 +1,12 @@
 import { createContext, useContext } from "react";
-import {AuthStore} from "./authStore";
+import cappsuleService from "../services/cappsuleService";
+import { AuthStore } from "./authStore";
+import { CappsuleStore } from "./cappsuleStore";
 
 
-export const store = {
-    authStore: new AuthStore()
-};
+export const storesContext = createContext({
+    authStore: new AuthStore(),
+    cappsuleStore: new CappsuleStore()
+});
 
-export const StoreContext = createContext({});
-
-export function useStore(){
-    return useContext(StoreContext);
-}
+export const useStores = () => useContext(storesContext);
