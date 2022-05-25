@@ -1,5 +1,5 @@
 
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import AddCappsule from "./components/AddCappsule";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Home from "./components/Home";
@@ -10,10 +10,14 @@ import CreateUser from "./components/CreateUser";
 import Friends from "./components/Friends";
 import FriendsUI from "./components/FriendsUI";
 import AddFriend from "./components/AddFriend";
+import SocketTest from "./components/SocketTest";
 import { AuthStore } from './stores/authStore';
 import { CappsuleStore } from './stores/cappsuleStore';
 import { storesContext, useStores } from './stores/store';
 import Test from "./components/test";
+import socketIOClient from "socket.io-client";
+import Chat from "./components/SocketTest";
+const ENDPOINT = "https://localhost:7010/friendRequestHub";
 
 const App = () => {
     const [showCreateUser, setShowCreateUser] = useState(false)
@@ -105,6 +109,11 @@ const App = () => {
                             <Friends friends={friends} onShowAddFriend={() => setShowAddFriend(!showAddFriend)} showAddFriend={showAddFriend} />
                             {!showAddFriend && <FriendsUI friends={friends} />}
                             {showAddFriend && <AddFriend onSendRequest={sendFriendRequest} />}
+                        </Route>
+                        <Route exact path="/socketTest">
+                            <Chat
+
+                            />
                         </Route>
                     </Switch>
                 </div>
